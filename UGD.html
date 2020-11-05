@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport "content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+        <script src="vue.js"></script>
+        <title>Game Tebak Angka </title>
+    </head>
+    <body>
+        <div id="app">
+            <nav class="navbar navbar-light bg-primary">
+                <div class="container">
+                    <div class="row">
+                        <div class="col"></div>
+                    </div>
+                </div>
+            </nav>
+            
+            <div class="row" style="margin-top: 8%; margin-right:  30%;">
+               <div class="col"></div>
+                <div class="col border-white p-5 rounded shadow">
+                    <div class="form group">
+                        <div class="text-center text-bold">
+                            <h4>--Tebak Angka!--</h4>
+                        </div>
+                        <input type="text" class="form-control rounded" v-model="input" :disabled= "Tebakan" placeholder="Masukan Angka">
+                    </div>
+                    <button @click="cek" :disabled="Tebakan" class="btn btn-primary btn-sm ">TEBAK</button>
+                    <button v-if="hasil==='benar'" @click ="selesai" class="btn btn-success btn-sm ">Masukan Angka Lagi</button>
+                    <button v-if="hasil==='salah'" @click ="lagi" class="btn btn-outline-primary btn-sm ">Masukan Angka Lagi</button>
+                    <button v-if="hasil==='selesai'" @click ="selesai" class="btn btn-outline-primary btn-sm ">Main Lagi</button>
+                    
+                </div>
+                <div v-if="Kesempatan !=0" class="card-footer text-muted text-center">
+                    Kesempatan main {{ `${Kesempatan}` }}  kali lagi.
+                </div>
+                <div v-else class="card-footer text-muted text-center">
+                    Angka yang benar adalah {{`${angka}`}}
+                </div>
+                <div v-if="hasil === 'benar'" class="card-footer text-muted text-center">Yeey Benar </div>
+                <div v-else="hasil === 'salah'" class="card-footer text-muted text-center">Angka Salah </div>
+            </div>
+                <footer class="text-center mt-5">
+                    {{`${febriela.nama}| ${febriela.npm} | ${febriela.kelas}`}}
+                </footer>
+                
+        </div>
+                
+    </body>
+
+<script>
+    new Vue ({
+        el:"#app",
+            data: {
+                febriela: {
+                nama:'febriela Winasta Hutami',
+                npm:'170709508',
+                kelas:'E',
+            },
+            angka:Math.floor(Math.random()* 10)+1,
+            Kesempatan:3,
+            input:0,
+            Tebakan:false,
+            hasil:"tebak",
+        },
+        methods: {
+        cek(){
+        this.Tebakan = true;
+        if(this.input != this.angka){
+            this.Kesempatan--;
+            if(this.Kesempatan == 0){
+            this.hasil = "selesai"
+            }else{
+                this.hasil ="salah";
+            }
+        }else{
+
+            this.hasil="benar";
+             }
+        },
+        lagi(){
+            this.hasil ="tebak";
+            this.Tebakan=false;
+        },
+        selesai(){
+            this.angka = Math.floor(Math.random()*10)+1;
+            this.Kesempatan =3;
+            this.Tebakan = false;
+            this.input=0;
+            this.hasil="tebak";
+            }
+        }
+    });
+    </script>
+
+
+</html>
